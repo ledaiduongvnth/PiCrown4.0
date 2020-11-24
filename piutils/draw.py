@@ -1,5 +1,5 @@
-from config import *
-import utils as ut
+from config.config import *
+from piutils import utils as ut
 
 import cv2
 import numpy as np

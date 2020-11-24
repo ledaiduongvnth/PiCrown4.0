@@ -5,9 +5,10 @@ import optparse
 from threading import Thread
 from queue import Queue
 
-from draw import *
-import utils as ut
+from piutils.draw import *
+from piutils import utils as ut
 import os
+import logging
 
 import tornado.httpserver
 import tornado.ioloop
@@ -241,8 +242,7 @@ def runMessageThread():
         ut.limit_fps_by_sleep(0.1, t0)
 
 
-if True:
-
+if __name__ == '__main__':
     parser = optparse.OptionParser()
 
     parser.add_option('--debug', type='int', default=1)

@@ -1,6 +1,8 @@
-from config import *
+from config.config import *
 import os
-
+import logging
+import time
+import cv2
 # region ROI
 # ==============================================================================
 def get_null_roi():
@@ -76,8 +78,8 @@ from logging.handlers import RotatingFileHandler
 def get_logger(name, level=logging.DEBUG):
     logger = logging.getLogger(name)
 
-    if not os.path.exists('./log'):
-        os.mkdir('./log')
+    if not os.path.exists('../log'):
+        os.mkdir('../log')
 
     hdlr = RotatingFileHandler(
         './log/{}_{}.log'.format(1, name),

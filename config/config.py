@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import cv2
-import time
-import logging
-
-from config_def import *
+from config.config_def import *
 
 #===============================================================================
 # Messages
