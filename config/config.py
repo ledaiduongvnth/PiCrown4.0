@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from config.config_def import *
-
 #===============================================================================
 # Messages
 #===============================================================================
@@ -29,7 +26,7 @@ COLOR_EXCEPTION = (40, 40, 160)
 #===============================================================================
 BASE_IP = '10.61.212.'
 MY_IP_SUFFIX = 13
-PI_CF = PI_CF_TABLES['demo_myanma'][MY_IP_SUFFIX]
+PI_CF = {'cam_ip': 3, 'server': 20, 'roi_translation': (0, 0.05)}
 
 SUPPORT_EMAIL = "admin@support.com"
 
