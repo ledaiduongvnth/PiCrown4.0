@@ -1,3 +1,5 @@
+import base64
+
 from config.config import *
 from piutils import utils as ut
 
@@ -112,16 +114,35 @@ def draw_profiles(img, requests):
 
 
 class Profile(object):
-    def __init__(self, encoded_img_filestream, lane_id, id, title='', is_landscape=1):
+    def __init__(self, encoded_profile_image, encoded_license_plate_image, lane_id, id, title='', is_landscape=1):
         self.is_landscape = is_landscape
         self.title = title
         self.lane_id = lane_id
-        self.encoded_img_filestream = encoded_img_filestream
+        self.encoded_profile_image = encoded_profile_image
+        self.encoded_license_plate_image = encoded_license_plate_image
         self.img = None
         self.id = id
 
     def decode(self):
-        self.img = cv2.imdecode(np.fromstring(self.encoded_img_filestream.read(), np.int8), 1)
+        if self.encoded_profile_image.startswith('data'):
+            encoded_data = self.encoded_profile_image.split(',')[1]
+        else:
+            encoded_data = self.encoded_profile_image
+        np_array = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+        profile_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+
+        if self.encoded_license_plate_image.startswith('data'):
+            encoded_data = self.encoded_license_plate_image.split(',')[1]
+        else:
+            encoded_data = self.encoded_license_plate_image
+        np_array = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+        license_plate_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+
+        height, width, channels = profile_image.shape
+        resized_license_plate_image = cv2.resize(license_plate_image, (int(width / 3), int(height / 3)),
+                                                 interpolation=cv2.INTER_AREA)
+        profile_image[0:int(height / 3), 0:int(width / 3)] = resized_license_plate_image
+        self.img = profile_image
         if self.is_landscape != 1:
             self.img = cv2.transpose(self.img)
 

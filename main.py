@@ -34,8 +34,9 @@ def display():
         logging.info('request={}, laneid={}, id={}, is_landscape={}'.format(request, lane_id, id, is_landscape))
         if id != 'Unknown':
             title = request.values.get('title', '')
-            encoded_img_filestream = request.files['profile_image']
-            hnd.add(Profile(encoded_img_filestream, lane_id, id, title, is_landscape))
+            encoded_profile_image = request.values['profile_image']
+            encoded_license_plate_image = request.values['license_plate_image']
+            hnd.add(Profile(encoded_profile_image, encoded_license_plate_image, lane_id, id, title, is_landscape))
     except Exception as ex:
         ut.handle_exception(ex)
 
@@ -97,7 +98,7 @@ def runImageRendererThread():
             if os.path.exists(screen_file):
                 screen = cv2.imread(screen_file)
                 cv2.imshow('', screen)
-                cv2.waitKey(1)
+                cv2.waitKey(5)
 
         except Exception as ex:
             ut.handle_exception(ex)
