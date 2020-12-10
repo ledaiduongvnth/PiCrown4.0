@@ -12,7 +12,7 @@ CONNECTION_LOSS_DOOR = u'Mất kết nối đến barrier.'
 # Application configs
 #===============================================================================
 MAX_FPS = 10.0 # can set phu hop de pi khong bi qua tai
-PROFILE_DISPLAY_MAX_TTL = 5 # thoi gian profile hien thi sau khi nguoi di qua (second)
+PROFILE_DISPLAY_MAX_TTL = 4 # thoi gian profile hien thi sau khi nguoi di qua (second)
 
 OPACITY = 230
 SCREEN_W = 1280

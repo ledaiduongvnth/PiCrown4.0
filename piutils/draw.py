@@ -41,7 +41,7 @@ def get_profile_cell(w, h, profile, border_thickness=3, bg_color=COLOR_OK):
     profile_size = min(w, h) * 8 / 10
     offset_x = (w - profile_size) / 2
 
-    if profile.title:
+    if profile.license_plate_text:
         offset_y = (h - profile_size) / 2 - 60
     else:
         offset_y = (h - profile_size) / 2
@@ -54,9 +54,10 @@ def get_profile_cell(w, h, profile, border_thickness=3, bg_color=COLOR_OK):
     int(offset_y - border_thickness):int((offset_y + profile_size) + border_thickness),
     int(offset_x - border_thickness):int((offset_x + profile_size) + 3), :] = (255, 255, 255)
 
-    if profile.title:
-        draw_unicode(rs, profile.message, (offset_x, offset_y + profile_size + 10), max_w=500)
-        draw_unicode(rs, profile.title, (offset_x, offset_y + profile_size + 65), max_w=500, small_font=True)
+    if profile.license_plate_text:
+        draw_unicode(rs, profile.license_plate_text, (offset_x, offset_y + profile_size + 10), max_w=1000)
+        draw_unicode(rs, profile.message, (offset_x, offset_y + profile_size + 65), max_w=1000)
+
 
     # print profile.img.shape
     # print rs.shape, offset_x, offset_y, profile_size
@@ -111,9 +112,9 @@ def draw_profiles(img, requests):
             draw_profile(img, 'l', llane[-1])
 
 class Profile(object):
-    def __init__(self, encoded_profile_image, encoded_license_plate_image, status, lane_id, message, title ='', is_landscape=1):
+    def __init__(self, encoded_profile_image, encoded_license_plate_image, status, lane_id, message, license_plate_text ='', is_landscape=1):
         self.is_landscape = is_landscape
-        self.title = title
+        self.license_plate_text = license_plate_text
         self.lane_id = lane_id
         self.encoded_profile_image = encoded_profile_image
         self.encoded_license_plate_image = encoded_license_plate_image
@@ -129,16 +130,16 @@ class Profile(object):
         np_array = np.fromstring(base64.b64decode(encoded_data), np.uint8)
         profile_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
 
-        if self.encoded_license_plate_image.startswith('data'):
-            encoded_data = self.encoded_license_plate_image.split(',')[1]
-        else:
-            encoded_data = self.encoded_license_plate_image
-        np_array = np.fromstring(base64.b64decode(encoded_data), np.uint8)
-        license_plate_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
-
-        height, width, channels = profile_image.shape
-        resized_license_plate_image = cv2.resize(license_plate_image, (int(width/3), int(height/3)), interpolation=cv2.INTER_AREA)
-        profile_image[0:int(height/3), 0:int(width/3)] = resized_license_plate_image
+        # if self.encoded_license_plate_image.startswith('data'):
+        #     encoded_data = self.encoded_license_plate_image.split(',')[1]
+        # else:
+        #     encoded_data = self.encoded_license_plate_image
+        # np_array = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+        # license_plate_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+        #
+        # height, width, channels = profile_image.shape
+        # resized_license_plate_image = cv2.resize(license_plate_image, (int(width/3), int(height/3)), interpolation=cv2.INTER_AREA)
+        # profile_image[0:int(height/3), 0:int(width/3)] = resized_license_plate_image
         self.img = profile_image
         if self.is_landscape != 1:
             self.img = cv2.transpose(self.img)

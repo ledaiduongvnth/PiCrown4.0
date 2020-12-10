@@ -36,11 +36,11 @@ def display():
 
         logging.info('request={}, laneid={}, is_landscape={}'.format(request, lane_id, is_landscape))
         if (message != 'Unknown'):
-            title=request.values.get('title', '')
+            license_plate_text=request.values.get('license_plate_text', '')
             encoded_profile_image=request.values['profile_image']
             encoded_license_plate_image=request.values['license_plate_image']
 
-            hnd.add(Profile(encoded_profile_image, encoded_license_plate_image, status, lane_id, message, title, is_landscape))
+            hnd.add(Profile(encoded_profile_image, encoded_license_plate_image, status, lane_id, message, license_plate_text, is_landscape))
     except Exception as ex:
         ut.handle_exception(ex)
 
@@ -82,12 +82,12 @@ def runImageRendererThread():
                 if l is not None:
                     height, width, channels = l.shape
                     resized_logo_image = cv2.resize(logo, (int(width / 5), int(height / 10)), interpolation=cv2.INTER_AREA)
-                    l[0 + 40:int(height / 10 + 40), int(width - width / 5): width] = resized_logo_image
+                    l[0:int(height / 10), int(width - width / 5): width] = resized_logo_image
 
                 if r is not None:
                     height, width, channels = r.shape
                     resized_logo_image = cv2.resize(logo, (int(width / 5), int(height / 10)), interpolation=cv2.INTER_AREA)
-                    r[0 + 40:height / 10 + 40, width - width / 5: width] = resized_logo_image
+                    r[0:int(height / 10), int(width - width / 5): width] = resized_logo_image
 
 
 
@@ -113,8 +113,14 @@ def runImageRendererThread():
 
             if os.path.exists(screen_file):
                 screen = cv2.imread(screen_file)
-                cv2.imshow('', screen)
-                cv2.waitKey(1)
+                window_name = "test"
+                cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
+                cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+                cv2.imshow(window_name, screen)
+                if cv2.waitKey(1) & 0xFF == ord('p'):
+                    while True:
+                        if cv2.waitKey(1) & 0xFF == ord('r'):
+                            break
 
         except Exception as ex:
             ut.handle_exception(ex)
