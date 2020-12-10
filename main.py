@@ -14,33 +14,37 @@ import tornado.wsgi
 
 logger = ut.get_logger("pi_render_service")
 app = Flask(__name__)
-q = Queue(1)
 hnd = DisplayRequestHandle()
+logo = cv2.imread("logo.png", cv2.IMREAD_COLOR)
+
 
 
 @app.route('/display', methods=['POST', 'GET'])
 def display():
     global hnd
     try:
-        id = request.values['id']
-        lane_id = request.values['lane_id']
-        is_landscape = request.values.get('is_landscape', None)
+        message=request.values['message']
+        lane_id=request.values['lane_id']
+        is_landscape=request.values.get('is_landscape', None)
+        status=request.values.get('status', None)
+
 
         try:
             is_landscape = int(is_landscape)
         except:
             is_landscape = 1
 
-        logging.info('request={}, laneid={}, id={}, is_landscape={}'.format(request, lane_id, id, is_landscape))
-        if id != 'Unknown':
-            title = request.values.get('title', '')
-            encoded_profile_image = request.values['profile_image']
-            encoded_license_plate_image = request.values['license_plate_image']
-            hnd.add(Profile(encoded_profile_image, encoded_license_plate_image, lane_id, id, title, is_landscape))
+        logging.info('request={}, laneid={}, is_landscape={}'.format(request, lane_id, is_landscape))
+        if (message != 'Unknown'):
+            title=request.values.get('title', '')
+            encoded_profile_image=request.values['profile_image']
+            encoded_license_plate_image=request.values['license_plate_image']
+
+            hnd.add(Profile(encoded_profile_image, encoded_license_plate_image, status, lane_id, message, title, is_landscape))
     except Exception as ex:
         ut.handle_exception(ex)
 
-    return jsonify(success=True)
+    return jsonify(success = True)
 
 
 def make_screen_img(left_img, right_img):
@@ -75,7 +79,19 @@ def runImageRendererThread():
                 img = np.zeros((SCREEN_H, SCREEN_W, 3), dtype=np.uint8)
                 l, r = hnd.render_left_right(img)
 
-                logger.info('time: {}: update screen images'.format(t0))
+                if l is not None:
+                    height, width, channels = l.shape
+                    resized_logo_image = cv2.resize(logo, (int(width / 5), int(height / 10)), interpolation=cv2.INTER_AREA)
+                    l[0 + 40:int(height / 10 + 40), int(width - width / 5): width] = resized_logo_image
+
+                if r is not None:
+                    height, width, channels = r.shape
+                    resized_logo_image = cv2.resize(logo, (int(width / 5), int(height / 10)), interpolation=cv2.INTER_AREA)
+                    r[0 + 40:height / 10 + 40, width - width / 5: width] = resized_logo_image
+
+
+
+                logger.info('time: {}: update screen image'.format(t0))
 
                 try:
                     bgra = make_screen_img(l, r)
@@ -98,7 +114,7 @@ def runImageRendererThread():
             if os.path.exists(screen_file):
                 screen = cv2.imread(screen_file)
                 cv2.imshow('', screen)
-                cv2.waitKey(5)
+                cv2.waitKey(1)
 
         except Exception as ex:
             ut.handle_exception(ex)
