@@ -1,0 +1,12 @@
+[Unit]
+Description=Omxplayer service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/omxplayer --live rtsp://admin:abcd1234@172.16.10.84/Streaming/Channels/101 --aspect-mode stretch
+
+Restart=always
+RestartSec=1 
+
+[Install]
+WantedBy=multi-user.target

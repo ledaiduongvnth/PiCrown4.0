@@ -11,15 +11,14 @@ with open('./license_plate.jpeg', 'rb') as f2:
     f2_bytes = f2.read()
 
 
-for i in range(1):
+for i in range(10):
     data = {
-        "status": "STOP",
+        "status": "OK",
         "message": "xin chào các bạn",
-        "lane_id": "R",
+        "lane_id": "L",
         "is_landscape": "1",
         "license_plate_text": "21G-545" + str(i),
         "profile_image": base64.b64encode(f1_bytes),
-        "license_plate_image": base64.b64encode(f2_bytes)
     }
     print(i)
     requests.post(url, data=data)

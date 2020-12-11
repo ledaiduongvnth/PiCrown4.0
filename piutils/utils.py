@@ -16,21 +16,21 @@ def not_null_roi(tl, br):
 
 
 def get_default_roi(display_side, img_w=SCREEN_W, img_h=SCREEN_H, roi_translation=(0, 0), l_roi_w_ratio=0.5):
-    offset_w = img_w / 10
-    offset_h = img_h / 10
+    offset_w = img_w / 25
+    offset_h = img_h / 15
     dy = int(roi_translation[1] * img_h)
     dx = int(roi_translation[0] * img_w)
 
     if display_side == "R":
         roi_w = int((img_w - offset_w * 2) * l_roi_w_ratio)  # display right is person's left
-        roi_tl = (offset_w + dx, offset_h + dy)
-        roi_br = (offset_w + roi_w + dx, img_h - offset_h * 2 + dy)
+        roi_tl = (int(offset_w + dx), int(offset_h + dy))
+        roi_br = (int(offset_w + roi_w + dx), int(img_h - offset_h * 2 + dy))
         if l_roi_w_ratio < 0.4:
             return get_null_roi()
     if display_side == "L":
         roi_w = int((img_w - offset_w * 2) * (1 - l_roi_w_ratio))
-        roi_tl = (img_w - offset_w - roi_w + dx, offset_h + dy)
-        roi_br = (img_w - offset_w + dx, img_h - offset_h * 2 + dy)
+        roi_tl = (int(img_w - offset_w - roi_w + dx), int(offset_h + dy))
+        roi_br = (int(img_w - offset_w + dx), int(img_h - offset_h * 2 + dy))
         if (1.0 - l_roi_w_ratio) < 0.4:
             return get_null_roi()
 

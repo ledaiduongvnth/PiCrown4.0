@@ -28,7 +28,6 @@ def display():
         is_landscape=request.values.get('is_landscape', None)
         status=request.values.get('status', None)
 
-
         try:
             is_landscape = int(is_landscape)
         except:
@@ -38,9 +37,8 @@ def display():
         if (message != 'Unknown'):
             license_plate_text=request.values.get('license_plate_text', '')
             encoded_profile_image=request.values['profile_image']
-            encoded_license_plate_image=request.values['license_plate_image']
 
-            hnd.add(Profile(encoded_profile_image, encoded_license_plate_image, status, lane_id, message, license_plate_text, is_landscape))
+            hnd.add(Profile(encoded_profile_image, encoded_profile_image, status, lane_id, message, license_plate_text, is_landscape))
     except Exception as ex:
         ut.handle_exception(ex)
 
@@ -51,10 +49,10 @@ def make_screen_img(left_img, right_img):
     rgba = np.zeros((SCREEN_H, SCREEN_W, 4), np.uint8)
     tl, br = ut.get_default_roi('R', rgba.shape[1], rgba.shape[0], roi_translation, roi_l_w_ratio)
     if ut.not_null_roi(tl, br):
-        cv2.rectangle(rgba, (128, 120), (640, 680), (0, 255, 0, OPACITY), 3)
+        cv2.rectangle(rgba, tl, br, COLOR_OK, 3)
     tl, br = ut.get_default_roi('L', rgba.shape[1], rgba.shape[0], roi_translation, roi_l_w_ratio)
     if ut.not_null_roi(tl, br):
-        cv2.rectangle(rgba, (640, 120), (1152, 680), (0, 255, 0, OPACITY), 3)
+        cv2.rectangle(rgba, tl, br, COLOR_OK, 3)
 
     if left_img is not None:
         rgba[:, 0:int(SCREEN_W / 2), 0:3] = left_img
@@ -89,12 +87,12 @@ def runImageRendererThread():
                     resized_logo_image = cv2.resize(logo, (int(width / 5), int(height / 10)), interpolation=cv2.INTER_AREA)
                     r[0:int(height / 10), int(width - width / 5): width] = resized_logo_image
 
-
-
                 logger.info('time: {}: update screen image'.format(t0))
 
                 try:
                     bgra = make_screen_img(l, r)
+                    cv2.imshow('', bgra)
+                    cv2.waitKey(1)
                     if bgra is not None:
                         cv2.imwrite(screen_file, bgra)
                         cnt = cnt + 1
@@ -111,16 +109,10 @@ def runImageRendererThread():
                         f.write('OK\n')
                         logger.info('notify screen OK, cnt %d' % cnt)
 
-            if os.path.exists(screen_file):
-                screen = cv2.imread(screen_file)
-                window_name = "test"
-                cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
-                cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-                cv2.imshow(window_name, screen)
-                if cv2.waitKey(1) & 0xFF == ord('p'):
-                    while True:
-                        if cv2.waitKey(1) & 0xFF == ord('r'):
-                            break
+            # if (os.path.exists(screen_file)):
+            #     screen = cv2.imread(screen_file)
+            #     cv2.imshow('', screen)
+            #     cv2.waitKey(1)
 
         except Exception as ex:
             ut.handle_exception(ex)
