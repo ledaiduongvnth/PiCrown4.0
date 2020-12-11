@@ -91,8 +91,6 @@ def runImageRendererThread():
 
                 try:
                     bgra = make_screen_img(l, r)
-                    cv2.imshow('', bgra)
-                    cv2.waitKey(1)
                     if bgra is not None:
                         cv2.imwrite(screen_file, bgra)
                         cnt = cnt + 1

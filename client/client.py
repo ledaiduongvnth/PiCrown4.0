@@ -2,7 +2,7 @@ import requests
 import base64
 import time
 
-url = 'http://172.16.10.235:5000/display'
+url = 'http://localhost:5000/display'
 
 with open('./face.jpeg', 'rb') as f1:
     f1_bytes = f1.read()
@@ -11,7 +11,7 @@ with open('./license_plate.jpeg', 'rb') as f2:
     f2_bytes = f2.read()
 
 
-for i in range(10):
+for i in range(1):
     data = {
         "status": "OK",
         "message": "xin chào các bạn",
