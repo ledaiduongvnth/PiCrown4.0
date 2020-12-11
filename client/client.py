@@ -2,7 +2,7 @@ import requests
 import base64
 import time
 
-url = 'http://localhost:5000/display'
+url = 'http://172.16.10.235:5000/display'
 
 with open('./face.jpeg', 'rb') as f1:
     f1_bytes = f1.read()
@@ -22,5 +22,5 @@ for i in range(1):
     }
     print(i)
     requests.post(url, data=data)
-    time.sleep(2)
+    time.sleep(3)
 

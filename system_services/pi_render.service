@@ -11,7 +11,8 @@ Type=idle
 User=pi
 Group=pi
 Restart=always
-RestartSec=1 
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target
+

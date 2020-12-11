@@ -1,11 +1,9 @@
 #!/usr/bin python
 from flask import *
 from threading import Thread
-from queue import Queue
 
 from piutils.draw import *
 from piutils import utils as ut
-import os
 import logging
 
 import tornado.httpserver
@@ -16,7 +14,6 @@ logger = ut.get_logger("pi_render_service")
 app = Flask(__name__)
 hnd = DisplayRequestHandle()
 logo = cv2.imread("logo.png", cv2.IMREAD_COLOR)
-
 
 
 @app.route('/display', methods=['POST', 'GET'])
@@ -91,6 +88,8 @@ def runImageRendererThread():
 
                 try:
                     bgra = make_screen_img(l, r)
+                    cv2.rectangle(bgra, (128, 120), (640, 680), (0, 255, 0, OPACITY), 3)
+                    cv2.rectangle(bgra, (640, 120), (1152, 680), (0, 255, 0, OPACITY), 3)
                     if bgra is not None:
                         cv2.imwrite(screen_file, bgra)
                         cnt = cnt + 1
