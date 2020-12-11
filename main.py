@@ -46,10 +46,10 @@ def make_screen_img(left_img, right_img):
     rgba = np.zeros((SCREEN_H, SCREEN_W, 4), np.uint8)
     tl, br = ut.get_default_roi('R', rgba.shape[1], rgba.shape[0], roi_translation, roi_l_w_ratio)
     if ut.not_null_roi(tl, br):
-        cv2.rectangle(rgba, tl, br, COLOR_OK, 3)
+        cv2.rectangle(rgba, tl, br, (100, 200, 0, OPACITY), 3)
     tl, br = ut.get_default_roi('L', rgba.shape[1], rgba.shape[0], roi_translation, roi_l_w_ratio)
     if ut.not_null_roi(tl, br):
-        cv2.rectangle(rgba, tl, br, COLOR_OK, 3)
+        cv2.rectangle(rgba, tl, br, (100, 200, 0, OPACITY), 3)
 
     if left_img is not None:
         rgba[:, 0:int(SCREEN_W / 2), 0:3] = left_img
@@ -88,8 +88,6 @@ def runImageRendererThread():
 
                 try:
                     bgra = make_screen_img(l, r)
-                    cv2.rectangle(bgra, (128, 120), (640, 680), (0, 255, 0, OPACITY), 3)
-                    cv2.rectangle(bgra, (640, 120), (1152, 680), (0, 255, 0, OPACITY), 3)
                     if bgra is not None:
                         cv2.imwrite(screen_file, bgra)
                         cnt = cnt + 1
