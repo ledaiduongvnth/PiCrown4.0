@@ -1,6 +1,5 @@
-sudo systemctl start omxplayer
-sudo systemctl start pi_render
 
 
-sudo systemctl enable omxplayer
-sudo systemctl enable pi_render
+sudo systemctl disable omxplayer
+sudo systemctl disable pi_render
+sudo systemctl disable png_render
