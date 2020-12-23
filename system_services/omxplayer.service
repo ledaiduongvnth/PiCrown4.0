@@ -6,7 +6,7 @@ After=network.target
 WorkingDirectory=/home/pi/PiCrown4.0
 Environment=DISPLAY=:0.0
 Environment=XAUTHORITY=/home/pi/.Xauthority
-ExecStart=/usr/bin/omxplayer --live rtsp://admin:abcd1234@172.16.10.84/Streaming/Channels/101 --aspect-mode stretch
+ExecStart=./home/pi/PiCrown4.0/system_services/omxplayer.sh
 Type=idle
 User=pi
 Group=pi
