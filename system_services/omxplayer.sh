@@ -3,6 +3,8 @@
 Script=/home/pi/PiCrown4.0/system_services/omxplayer.sh
 
 /usr/bin/omxplayer --live rtsp://admin:abcd1234@172.16.10.84/Streaming/Channels/101 --aspect-mode stretch
+#/usr/bin/omxplayer --live rtsp://admin:abcd1234@10.61.212.12/Streaming/Channels/101 --aspect-mode stretch
+
 
 ##Find PID of omxplayer.bin
 #The brackets "[ ]" around the n prevent grep from returning itself

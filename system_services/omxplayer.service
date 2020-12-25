@@ -6,7 +6,7 @@ After=network.target
 WorkingDirectory=/home/pi/PiCrown4.0
 Environment=DISPLAY=:0.0
 Environment=XAUTHORITY=/home/pi/.Xauthority
-ExecStart=./home/pi/PiCrown4.0/system_services/omxplayer.sh
+ExecStart=/bin/bash /home/pi/PiCrown4.0/system_services/omxplayer.sh
 Type=idle
 User=pi
 Group=pi

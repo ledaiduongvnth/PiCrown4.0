@@ -2,7 +2,7 @@ import requests
 import base64
 import time
 
-url = 'http://172.16.10.234:5000/display'
+url = 'http://10.61.212.13:5000/display'
 
 with open('./face.jpeg', 'rb') as f1:
     f1_bytes = f1.read()
@@ -13,7 +13,7 @@ with open('./license_plate.jpeg', 'rb') as f2:
 
 for i in range(1):
     data = {
-        "status": "OK",
+        "status": "STOP",
         "message": "xin chào các bạn",
         "lane_id": "L",
         "is_landscape": "1",
