@@ -1,4 +1,5 @@
 #!/usr/bin python
+import os
 from flask import *
 from threading import Thread
 
@@ -104,10 +105,10 @@ def runImageRendererThread():
                         f.write('OK\n')
                         logger.info('notify screen OK, cnt %d' % cnt)
 
-            # if (os.path.exists(screen_file)):
-            #     screen = cv2.imread(screen_file)
-            #     cv2.imshow('', screen)
-            #     cv2.waitKey(1)
+            if (os.path.exists(screen_file)):
+                screen = cv2.imread(screen_file)
+                cv2.imshow('', screen)
+                cv2.waitKey(1)
 
         except Exception as ex:
             ut.handle_exception(ex)

@@ -14,12 +14,12 @@ CONNECTION_LOSS_DOOR = u'Mất kết nối đến barrier.'
 MAX_FPS = 10.0 # can set phu hop de pi khong bi qua tai
 PROFILE_DISPLAY_MAX_TTL = 4 # thoi gian profile hien thi sau khi nguoi di qua (second)
 
-OPACITY = 230
+OPACITY = 255
 SCREEN_W = 1280
 SCREEN_H = 800
 
-COLOR_OK = (100, 200, 0)
-COLOR_EXCEPTION = (40, 40, 160)
+COLOR_OK = (100, 230, 0)
+COLOR_EXCEPTION = (40, 40, 230)
 
 #===============================================================================
 # User configs

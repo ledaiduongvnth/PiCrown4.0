@@ -9,11 +9,11 @@ import time
 from PIL import Image, ImageFont, ImageDraw
 import threading
 
-g_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 50)
+g_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 60)
 g_font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 30)
 
 
-def draw_unicode(img, unicode_text, origin, max_w=500, small_font=False):
+def draw_unicode(img, unicode_text, origin, color, max_w=500, small_font=False):
     if small_font is True:
         font = g_font_small
     else:
@@ -28,7 +28,7 @@ def draw_unicode(img, unicode_text, origin, max_w=500, small_font=False):
     pil_im = Image.fromarray(crop)  # opencv Mat -> PIL images
     draw = ImageDraw.Draw(pil_im)
 
-    draw.text((0, 0), unicode_text, (255, 255, 255), font)
+    draw.text((0, 0), unicode_text, color, font)
     crop = np.array(pil_im)  # PIL images -> opencv Mat
     img[int(top):int(bottom), int(left):int(right), :] = crop
 
@@ -55,8 +55,11 @@ def get_profile_cell(w, h, profile, border_thickness=3, bg_color=COLOR_OK):
     int(offset_x - border_thickness):int((offset_x + profile_size) + 3), :] = (255, 255, 255)
 
     if profile.license_plate_text:
-        draw_unicode(rs, profile.license_plate_text, (offset_x, offset_y + profile_size + 10), max_w=1000)
-        draw_unicode(rs, profile.message, (offset_x, offset_y + profile_size + 65), max_w=1000)
+        text_color = COLOR_EXCEPTION
+        if profile.status == "STOP":
+            text_color = COLOR_OK
+        draw_unicode(rs, profile.license_plate_text, (offset_x + 100, offset_y + profile_size + 30), text_color, max_w=1000)
+        draw_unicode(rs, profile.message, (offset_x, offset_y + profile_size + 100), text_color, max_w=1000)
 
 
     # print profile.img.shape
