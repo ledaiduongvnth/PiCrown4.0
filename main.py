@@ -105,10 +105,10 @@ def runImageRendererThread():
                         f.write('OK\n')
                         logger.info('notify screen OK, cnt %d' % cnt)
 
-            if (os.path.exists(screen_file)):
-                screen = cv2.imread(screen_file)
-                cv2.imshow('', screen)
-                cv2.waitKey(1)
+            # if (os.path.exists(screen_file)):
+            #     screen = cv2.imread(screen_file)
+            #     cv2.imshow('', screen)
+            #     cv2.waitKey(1)
 
         except Exception as ex:
             ut.handle_exception(ex)
@@ -118,7 +118,7 @@ def runImageRendererThread():
 
 if __name__ == '__main__':
     render_dir = "./log"
-    screen_file = "./screen.png"
+    screen_file = "./log/screen.png"
     cam_type = ut.get_config('cam_type', 0)
     roi_translation = ut.get_config('roi_translation', (0, 0))
     roi_l_w_ratio = ut.get_config('roi_l_w_ratio', 0.5)

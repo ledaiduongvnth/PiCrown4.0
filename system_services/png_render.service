@@ -6,7 +6,7 @@ After=network.target
 WorkingDirectory=/home/pi/PiCrown4.0
 Environment=DISPLAY=:0.0
 Environment=XAUTHORITY=/home/pi/.Xauthority
-ExecStart=/home/pi/PiCrown4.0/raspidmx/png_disp_service/png_disp_service /home/pi/PiCrown4.0/screen.png
+ExecStart=/home/pi/PiCrown4.0/raspidmx/png_disp_service/png_disp_service /home/pi/PiCrown4.0/log/screen.png
 Type=idle
 User=pi
 Group=pi

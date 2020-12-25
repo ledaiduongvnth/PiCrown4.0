@@ -3,6 +3,7 @@ import os
 import logging
 import time
 import cv2
+from pathlib import Path
 
 
 # region ROI
@@ -92,11 +93,15 @@ from logging.handlers import RotatingFileHandler
 def get_logger(name, level=logging.DEBUG):
     logger = logging.getLogger(name)
 
-    if not os.path.exists('../log'):
-        os.mkdir('../log')
+    if not os.path.exists('./log'):
+        os.mkdir('./log')
+
+    log_file_path = './log/{}_{}.log'.format(1, name)
+    if not os.path.exists(log_file_path):
+        Path(log_file_path).touch(mode=0o777, exist_ok=True)
 
     hdlr = RotatingFileHandler(
-        './log/{}_{}.log'.format(1, name),
+        '../log/{}_{}.log'.format(1, name),
         mode='a', maxBytes=5 * 1024 * 1024, backupCount=2, encoding=None, delay=0)
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
     hdlr.setFormatter(formatter)
