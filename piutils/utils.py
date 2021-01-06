@@ -110,3 +110,8 @@ def get_logger(name, level=logging.DEBUG):
     logger.setLevel(level)
 
     return logger
+
+
+def play_sound():
+    print("this is play_sound thread")
+    os.system('mpg321 /home/pi/PiCrown4.0/sound.mp3')

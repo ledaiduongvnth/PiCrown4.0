@@ -1,0 +1,1 @@
+@reboot sleep 20 && /bin/echo -e 'connect E4:7F:8F:BC:FE:C4 \n' | bluetoothctl

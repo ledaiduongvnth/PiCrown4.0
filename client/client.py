@@ -13,7 +13,7 @@ with open('./license_plate.jpeg', 'rb') as f2:
 
 for i in range(1):
     data = {
-        "status": "OK",
+        "status": "STOP",
         "message": "xin chào các bạn",
         "lane_id": "L",
         "is_landscape": "1",
