@@ -17,6 +17,9 @@ app = Flask(__name__)
 hnd = DisplayRequestHandle()
 logo = cv2.imread("logo.png", cv2.IMREAD_COLOR)
 
+def play_sound(message):
+    requests.get(bluethooth_url, params={"message": message})
+
 
 @app.route('/display', methods=['POST', 'GET'])
 def display():
@@ -27,7 +30,8 @@ def display():
         is_landscape=request.values.get('is_landscape', None)
         status=request.values.get('status', None)
         if status == "STOP":
-            requests.get(bluethooth_url, params={"message": message})
+            sound_thread = Thread(target=play_sound, args=(message, ))
+            sound_thread.start()
 
         try:
             is_landscape = int(is_landscape)

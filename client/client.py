@@ -2,7 +2,7 @@ import requests
 import base64
 import time
 
-url = 'http://localhost:5000/display'
+url = 'http://10.61.212.15:5000/display'
 
 with open('./face.jpeg', 'rb') as f1:
     f1_bytes = f1.read()
