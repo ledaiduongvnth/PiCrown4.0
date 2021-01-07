@@ -8,7 +8,7 @@ app = Flask(__name__)
 def play_sound(command):
     print("play sound")
     if command == "no_face":
-        os.system('mpg321 /home/pi/PiCrown4.0/bluethooth_gateway/Khong\ tim\ thay\ khuon\ mat.mp3')
+        os.system('mpg321 /home/pi/PiCrown4.0/bluethooth_gateway/Loi\ khuon\ mat.mp3')
     elif command == "wrong_ticket":
         os.system('mpg321 /home/pi/PiCrown4.0/bluethooth_gateway/Khong\ khop\ ve.mp3')
     elif command == "no_licence_plate":
