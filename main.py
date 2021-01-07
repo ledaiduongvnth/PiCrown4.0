@@ -2,6 +2,7 @@
 import os
 from flask import *
 from threading import Thread
+import requests
 
 from piutils.draw import *
 from piutils import utils as ut
@@ -25,6 +26,8 @@ def display():
         lane_id=request.values['lane_id']
         is_landscape=request.values.get('is_landscape', None)
         status=request.values.get('status', None)
+        if status == "STOP":
+            requests.get(bluethooth_url, params={"message": message})
 
         try:
             is_landscape = int(is_landscape)

@@ -27,7 +27,7 @@ COLOR_EXCEPTION = (40, 40, 230)
 BASE_IP = '10.61.212.'
 MY_IP_SUFFIX = 13
 PI_CF = {'cam_ip': 3, 'server': 20, 'roi_translation': (0, 0.05)}
-
+bluethooth_url = 'http://10.61.212.8:5000/sound'
 SUPPORT_EMAIL = "admin@support.com"
 
 NOTICE_LINES = [

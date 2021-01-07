@@ -5,20 +5,20 @@ from threading import Thread
 app = Flask(__name__)
 
 
-def play_sound(command):
+def play_sound(message):
     print("play sound")
-    if command == "no_face":
+    if message == "Lỗi khuôn mặt":
         os.system('mpg321 /home/pi/PiCrown4.0/bluethooth_gateway/Loi\ khuon\ mat.mp3')
-    elif command == "wrong_ticket":
+    elif message == "Không khớp vé":
         os.system('mpg321 /home/pi/PiCrown4.0/bluethooth_gateway/Khong\ khop\ ve.mp3')
-    elif command == "no_licence_plate":
+    elif message == "Không có biển số":
         os.system('mpg321 /home/pi/PiCrown4.0/bluethooth_gateway/Khong\ co\ bien\ so.mp3')
 
 
 @app.route("/sound")
 def hello():
-    command = request.args.get('command')
-    sound_thread = Thread(target=play_sound, args=(command, ))
+    message = request.args.get('message')
+    sound_thread = Thread(target=play_sound, args=(message, ))
     sound_thread.start()
     return "ok", 200
 
