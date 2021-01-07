@@ -2,7 +2,7 @@ import requests
 import base64
 import time
 
-url = 'http://10.61.212.13:5000/display'
+url = 'http://localhost:5000/display'
 
 with open('./face.jpeg', 'rb') as f1:
     f1_bytes = f1.read()
@@ -19,6 +19,7 @@ for i in range(1):
         "is_landscape": "1",
         "license_plate_text": "21G-545" + str(i),
         "profile_image": base64.b64encode(f1_bytes),
+        "license_plate_image": base64.b64encode(f2_bytes)
     }
     print(i)
     requests.post(url, data=data)

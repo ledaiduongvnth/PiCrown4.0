@@ -35,8 +35,9 @@ def display():
         if (message != 'Unknown'):
             license_plate_text=request.values.get('license_plate_text', '')
             encoded_profile_image=request.values['profile_image']
+            encoded_license_plate_image=request.values['license_plate_image']
 
-            hnd.add(Profile(encoded_profile_image, encoded_profile_image, status, lane_id, message, license_plate_text, is_landscape))
+            hnd.add(Profile(encoded_profile_image, encoded_license_plate_image, status, lane_id, message, license_plate_text, is_landscape))
     except Exception as ex:
         ut.handle_exception(ex)
 
