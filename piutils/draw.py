@@ -131,14 +131,17 @@ class Profile(object):
         else:
             encoded_data = self.encoded_profile_image
         np_array = np.fromstring(base64.b64decode(encoded_data), np.uint8)
-        profile_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+        profile_image_pre = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+        profile_image = cv2.resize(profile_image_pre, (225, 250), interpolation=cv2.INTER_AREA)
 
         if self.encoded_license_plate_image.startswith('data'):
             encoded_data = self.encoded_license_plate_image.split(',')[1]
         else:
             encoded_data = self.encoded_license_plate_image
         np_array = np.fromstring(base64.b64decode(encoded_data), np.uint8)
-        license_plate_image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+        license_plate_image_pre = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+        license_plate_image = cv2.resize(license_plate_image_pre, (225, 250), interpolation=cv2.INTER_AREA)
+
 
         height, width, channels = profile_image.shape
         resized_license_plate_image = cv2.resize(license_plate_image, (int(width/3), int(height/3)), interpolation=cv2.INTER_AREA)
