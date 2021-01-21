@@ -30,8 +30,9 @@ def display():
         is_landscape=request.values.get('is_landscape', None)
         status=request.values.get('status', None)
         if status == "STOP":
-            sound_thread = Thread(target=play_sound, args=(message, ))
-            sound_thread.start()
+            pass
+            #sound_thread = Thread(target=play_sound, args=(message, ))
+            #sound_thread.start()
 
         try:
             is_landscape = int(is_landscape)
